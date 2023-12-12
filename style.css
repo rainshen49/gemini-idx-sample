@@ -73,3 +73,9 @@ button:hover {
 p.chat-pending {
   visibility: hidden;
 }
+
+p {
+  /* Support line wraps in responses */
+  white-space: pre-wrap;
+  font-family: monospace;
+}
