@@ -16,7 +16,7 @@ h1 {
 h1::before {
   content: '';
   display: inline-block;
-  background: url(https://g3doc.corp.google.com/learning/gemini/external/g3doc/images/gemini_logo.png);
+  background: url(gemini_logo.png);
   width: 40px;
   height: 40px;
   background-size: cover;
