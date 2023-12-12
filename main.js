@@ -84,6 +84,7 @@ function addChatMessage(text, textAlign) {
   const p = document.createElement('p')
   p.textContent = text
   p.style.textAlign = textAlign
+  p.classList.add('output')
   chatHistory.appendChild(p)
 }
 
