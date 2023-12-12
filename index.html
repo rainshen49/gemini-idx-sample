@@ -11,7 +11,7 @@
 
   <main>
     <h1>Gemini Storyteller</h1>
-    <form>
+    <form id="single">
       <label>
         Tell me a story about
         <input name="prompt" type="text">
@@ -19,6 +19,16 @@
       <button type="submit">Go</button>
     </form>
     <p class="output">(Your story will appear here)</p>
+
+    <form id="chat">
+      <label>
+        Ask more questions about the story
+        <input name="chat" type="text">
+      </label>
+      <button type="submit">Go</button>
+    </form>
+    <div class="chat-history"></div>
+    <p class="chat-pending">Waiting for a response...</p>
   </main>
 
   <script type="module" src="/main.js"></script>

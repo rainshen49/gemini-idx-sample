@@ -54,3 +54,11 @@ button {
 button:hover {
   background-color: #ddd;
 }
+
+.chat-history>p {
+  border-bottom: 1px solid #eee;
+}
+
+p.chat-pending {
+  visibility: hidden;
+}
