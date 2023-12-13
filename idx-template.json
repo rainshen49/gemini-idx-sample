@@ -1,8 +1,16 @@
 {
     "name": "Firebase & Gemini AI",
     "description": "Start a simple web app using Gemini AI and deploy to Firebase",
-    "categories": ["Web"],
+    "categories": [
+        "Web"
+    ],
     "icon": "https://www.gstatic.com/monospace/231128/logo_gemini_512.png",
     "publisher": "Lingkai Shen",
-    "params": ["firebase-project-id"]
-  }
+    "params": [
+        {
+            "id": "firebase-project-id",
+            "name": "Firebase Project ID",
+            "type": "text"
+        }
+    ]
+}
