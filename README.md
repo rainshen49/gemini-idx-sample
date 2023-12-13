@@ -1,6 +1,11 @@
-# Gemini AI API Example
+A template for getting started with Gemini AI and Firebase in Project IDX
 
-1. Obtain an API key for [Vertex AI](https://cloud.google.com/vertex-ai/docs/generative-ai/start/quickstarts/api-quickstart)
-1. Create a `.env.local` file in the root directory and populate the API key like `VITE_GEN_AI_KEY=your api key here`
-1. `npm run build`
-1. Connect with a Firebase project from the Firebase icon in the sidebar, and deploy to Firebase Hosting.
+## Open in Project IDX 
+
+<a href="https://idx.google.com/new?template=https://github.com/rainshen49/gemini-idx-sample">
+  <img
+    alt="Open in Monospace"
+    src="https://www.gstatic.com/monospace/230815/openinprojectidx.png"
+    width="170"
+  />
+</a>
