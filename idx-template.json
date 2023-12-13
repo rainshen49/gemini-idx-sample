@@ -10,8 +10,7 @@
     "params": [
         {
             "id": "projectId",
-            "name": "Firebase Project ID",
-            "type": "text"
+            "name": "Firebase Project ID"
         }
     ]
 }
