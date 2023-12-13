@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/generative-ai": "file:google-generative-ai-0.0.3.tgz"
+    "@google/generative-ai": "^0.1.1"
   },
   "devDependencies": {
     "vite": "^4.4.5"
