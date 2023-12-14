@@ -4,31 +4,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gemini API Storyteller</title>
+  <title>Baking with Gemini</title>
 </head>
 
 <body>
 
   <main>
-    <h1>Gemini Storyteller </h1>
-    <form id="single">
-      <label>
-        Tell me a story about
-        <input name="prompt" type="text">
-      </label>
-      <button type="submit">Go</button>
+    <h1>Baking with Gemini</h1>
+    <form id="image">
+      <div class="image-picker">
+        <label class="image-choice">
+          <input type="radio" checked name="chosen-image" value="/baked_goods_1.jpg">
+          <img src="/baked_goods_1.jpg">
+        </label>
+        <label class="image-choice">
+          <input type="radio" name="chosen-image" value="/baked_goods_2.jpg">
+          <img src="/baked_goods_2.jpg">
+        </label>
+        <label class="image-choice">
+          <input type="radio" name="chosen-image" value="/baked_goods_3.jpg">
+          <img src="/baked_goods_3.jpg">
+        </label>
+      </div>
+      <div class="prompt-box">
+        <label>
+          <input name="prompt" placeholder="Enter instructions here" type="text"
+            value="Provide a recipe for the baked goods in the image">
+        </label>
+        <button type="submit">Go</button>
+      </div>
     </form>
-    <p class="output">(Your story will appear here)</p>
+    <p class="output">(Results will appear here)</p>
 
     <form id="chat">
-      <label>
-        Ask more questions about the story
-        <input name="chat" type="text">
-      </label>
-      <button type="submit">Go</button>
+      <div class="prompt-box">
+        <label>
+          Ask more questions about the recipe
+          <input name="chat" type="text">
+        </label>
+        <button type="submit">Go</button>
+      </div>
     </form>
     <div class="chat-history"></div>
-    <p class="chat-pending output">Waiting for a response...</p>
   </main>
 
   <script type="module" src="/main.js"></script>

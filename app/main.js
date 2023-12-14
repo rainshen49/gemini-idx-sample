@@ -1,52 +1,77 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
+import Base64 from 'base64-js';
+import MarkdownIt from 'markdown-it';
+import { maybeShowApiKeyBanner } from './gemini-api-banner';
 import './style.css';
 
-const GEN_API_KEY = import.meta.env.VITE_GEN_AI_KEY;
+// 🔥 FILL THIS OUT FIRST! 🔥
+// 🔥 GET YOUR GEMINI API KEY AT 🔥
+// 🔥 https://makersuite.google.com/app/apikey 🔥
+const GEN_API_KEY = import.meta.env.VITE_GEN_AI_KEY ?? 'TODO';
 
 const genAI = new GoogleGenerativeAI(GEN_API_KEY);
-const model = genAI.getGenerativeModel({
+const imageModel = genAI.getGenerativeModel({
+  model: "gemini-pro-vision",
+  safetySettings: [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+  ],
+});
+const textModel = genAI.getGenerativeModel({
   model: "gemini-pro",
-  generationConfig: {
-    maxOutputTokens: 100,
-  },
 });
-const chat = model.startChat({
-  generationConfig: {
-    maxOutputTokens: 100,
-  },
+const chat = textModel.startChat({
+  safetySettings: [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+  ],
 });
+const md = new MarkdownIt();
 
-const singleForm = document.querySelector('form#single');
+const imageForm = document.querySelector('form#image');
 
-singleForm.onsubmit = async (ev) => {
+imageForm.onsubmit = async (ev) => {
   ev.preventDefault();
-  const singleOutput = document.querySelector('form#single+.output');
-  const singleInput = document.querySelector('form#single input[name="prompt"]');
-  singleOutput.textContent = 'Generating...';
-  // Assemble the prompt by combining pre-determined text
-  // "tell me a story" with what the user entered in the text field
-  const subject = singleInput.value;
-  const prompt = `Tell me a very short story about: ${subject}`;
+  const imageOutput = document.querySelector('form#image+.output');
+  const promptInput = document.querySelector('form#image input[name="prompt"]');
+  imageOutput.textContent = 'Generating...';
 
   try {
-    const result = await model.generateContent({
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: prompt }],
-        },
-      ],
-    });
-    const response = result.response.text();
-    singleOutput.textContent = response
-    chat.sendMessage("When asked more questions, continue talking about this story.")
+    // Load the image as a base64 string
+    const imageUrl = imageForm.elements.namedItem('chosen-image').value;
+    const imageBase64 = await fetch(imageUrl)
+      .then(r => r.arrayBuffer())
+      .then(a => Base64.fromByteArray(new Uint8Array(a)));
+
+    // Assemble the prompt by combining the text with the chosen image
+    const contents = [
+      {
+        role: 'user',
+        parts: [
+          { inline_data: { mime_type: 'image/jpeg', data: imageBase64, } },
+          { text: promptInput.value }
+        ]
+      }
+    ];
+
+    // Call the gemini-pro-vision model, and get a stream of results
+    const result = await imageModel.generateContentStream({ contents });
+
+    // Read from the stream and interpret the output as markdown
+    const buffer = [];
+    for await (const response of result.stream) {
+      buffer.push(response.text());
+      imageOutput.innerHTML = md.render(buffer.join(''));
+    }
+    chat.sendMessage("When asked more questions, continue talking about this recipe." + buffer.join(''))
     clearChatMessages()
+  } catch (e) {
+    imageOutput.innerHTML += '<hr>' + e;
   }
-  catch (e) {
-    singleOutput.textContent = e.message;
-  }
-  singleInput.setAttribute('placeholder', subject);
-  singleInput.value = '';
 };
 
 const chatForm = document.querySelector('form#chat');
@@ -57,35 +82,37 @@ chatForm.onsubmit = async (ev) => {
   // Assemble the prompt by combining pre-determined text
   // "tell me a story" with what the user entered in the text field
   const message = chatInput.value;
-  addChatMessage(message, "end");
-  showPendingChat();
+  continueChatMessage(message, addChatMessage("end"))
+  const p = addChatMessage("start");
+  const buffer = [];
   try {
-    const result = await chat.sendMessage(message);
-    const response = result.response.text()
-    addChatMessage(response, "start");
+    const result = await chat.sendMessageStream(message);
+    for await (const response of result.stream) {
+      buffer.push(response.text());
+      continueChatMessage(buffer.join(''), p)
+    }
   }
   catch (e) {
-    addChatMessage(e.message, "start");
+    continueChatMessage(e.message, p);
   }
   chatInput.value = '';
-  hidePendingChat();
 };
 
-function showPendingChat(){
-  document.querySelector(".chat-pending").style.visibility = "visible";
-}
+// You can delete this once you've filled out an API key
+maybeShowApiKeyBanner(GEN_API_KEY);
 
-function hidePendingChat(){
-  document.querySelector(".chat-pending").style.visibility = "hidden";
-}
-
-function addChatMessage(text, textAlign) {
+function addChatMessage(textAlign) {
   const chatHistory = document.querySelector('div.chat-history');
   const p = document.createElement('p')
-  p.textContent = text
   p.style.textAlign = textAlign
+  p.textContent = "Waiting..."
   p.classList.add('output')
   chatHistory.appendChild(p)
+  return p
+}
+
+function continueChatMessage(markdown, p) {
+  p.innerHTML = md.render(markdown)
 }
 
 function clearChatMessages() {
