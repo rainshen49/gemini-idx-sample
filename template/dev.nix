@@ -23,7 +23,7 @@
       };
 
       onStart = {
-        firebase-use = "firebase use <project-id>"l
+        firebase-use = "firebase use <project-id>";
       };
     };
     # preview configuration, identical to monospace.json
