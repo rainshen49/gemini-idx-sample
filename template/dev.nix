@@ -7,7 +7,7 @@
   ];
   # Sets environment variables in the workspace
   env = {
-    GOOGLE_PROJECT_ID = "<project-id>";
+    GOOGLE_PROJECT = "<project-id>";
   };
 
   idx = {
@@ -23,6 +23,7 @@
       };
 
       onStart = {
+        firebase-login = "firebase login";
         firebase-use = "firebase use <project-id>";
       };
     };
