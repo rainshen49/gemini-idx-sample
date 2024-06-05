@@ -1,13 +1,14 @@
-# To learn more about how to use Nix to configure your environment
-# see: https://developers.google.com/idx/guides/customize-idx-env
+# This will become the user's IDX nix config
 { pkgs, ... }: {
-  channel = "stable-23.05"; # "stable-23.05" or "unstable"
+  channel = "unstable"; # "stable-23.05" or "unstable"
   # Use https://search.nixos.org/packages to  find packages
   packages = [
     pkgs.nodejs
   ];
   # Sets environment variables in the workspace
-  env = { };
+  env = {
+    GOOGLE_PROJECT_ID = "<project-id>";
+  };
 
   idx = {
     # search for the extension on https://open-vsx.org/ and use "publisher.id"
@@ -19,6 +20,10 @@
       # to run something each time the environment is rebuilt, use the `onStart` hook
       onCreate = {
         npm-install = "npm install";
+      };
+
+      onStart = {
+        firebase-use = "firebase use <project-id>"l
       };
     };
     # preview configuration, identical to monospace.json

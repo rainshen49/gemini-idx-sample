@@ -6,11 +6,13 @@
         "Web"
     ],
     "icon": "https://www.gstatic.com/monospace/231128/logo_gemini_512.png",
-    "publisher": "Lingkai Shen",
+    "publisher": "Google LLC",
     "params": [
         {
             "id": "projectId",
-            "name": "Firebase Project ID"
+            "name": "Firebase Project ID",
+            "type": "string",
+            "required": true
         }
     ]
 }
