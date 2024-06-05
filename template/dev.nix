@@ -23,8 +23,7 @@
       };
 
       onStart = {
-        firebase-login = "firebase login";
-        firebase-use = "firebase use <project-id>";
+        firebase-setup = "firebase login && firebase use <project-id>";
       };
     };
     # preview configuration, identical to monospace.json
