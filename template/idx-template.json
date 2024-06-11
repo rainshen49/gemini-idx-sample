@@ -13,6 +13,13 @@
             "name": "Firebase Project ID",
             "type": "string",
             "required": true
+        },
+        {
+            "id": "apiKey",
+            "name": "API Key used by the web app",
+            "type": "string",
+            "default": "TODO",
+            "required": false
         }
     ]
 }
