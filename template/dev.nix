@@ -26,7 +26,7 @@
 
       onStart = {
         gcloud-setup = "gcloud services enable generativelanguage.googleapis.com";
-        firebase-setup = "firebase login && firebase use <project-id>"
+        firebase-setup = "firebase login && firebase use <project-id>";
       };
     };
     # preview configuration, identical to monospace.json
