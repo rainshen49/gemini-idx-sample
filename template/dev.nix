@@ -8,6 +8,7 @@
   # Sets environment variables in the workspace
   env = {
     GOOGLE_PROJECT = "<project-id>";
+    CLOUDSDK_CORE_PROJECT = "<project-id>";
     VITE_GEN_AI_KEY = "<api-key>";
   };
 
@@ -25,6 +26,7 @@
 
       onStart = {
         gcloud-setup = "gcloud services enable generativelanguage.googleapis.com";
+        firebase-setup = "firebase login && firebase use <project-id>"
       };
     };
     # preview configuration, identical to monospace.json
