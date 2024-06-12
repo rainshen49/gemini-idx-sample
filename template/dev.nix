@@ -25,7 +25,7 @@
       };
 
       onStart = {
-        gcloud-setup = "gcloud services enable generativelanguage.googleapis.com";
+        gcloud-setup = "gcloud config set project <project-id> && gcloud services enable generativelanguage.googleapis.com";
       };
     };
     # preview configuration, identical to monospace.json
