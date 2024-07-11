@@ -4,12 +4,13 @@
   # Use https://search.nixos.org/packages to  find packages
   packages = [
     pkgs.nodejs
+    pkgs.terraform
   ];
   # Sets environment variables in the workspace
   env = {
     GOOGLE_PROJECT = "<project-id>";
     CLOUDSDK_CORE_PROJECT = "<project-id>";
-    VITE_GEN_AI_KEY = "<api-key>";
+    TF_VAR_project= "<project-id>";
   };
 
   idx = {
@@ -22,10 +23,11 @@
       # to run something each time the environment is rebuilt, use the `onStart` hook
       onCreate = {
         npm-install = "npm install";
+        terraform-init = "terraform init";
       };
 
       onStart = {
-        gcloud-setup = "gcloud config set project <project-id> && gcloud services enable generativelanguage.googleapis.com";
+        terraform-apply = "terraform apply --auto-approve";
       };
     };
     # preview configuration, identical to monospace.json
