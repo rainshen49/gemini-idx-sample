@@ -40,7 +40,7 @@ class GenerativeAISample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cat vs Blueberry Cones',
+      title: 'Cat vs Blueberry Scone',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           brightness: Brightness.dark,
@@ -48,7 +48,7 @@ class GenerativeAISample extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const ChatScreen(title: 'Cat vs Blueberry Cones'),
+      home: const ChatScreen(title: 'Cat vs Blueberry Scone'),
     );
   }
 }
