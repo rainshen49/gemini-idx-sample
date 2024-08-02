@@ -52,7 +52,7 @@ resource "google_service_usage_consumer_quota_override" "generativelanguage" {
 resource "google_apikeys_key" "generativelanguage" {
   project = var.project
 
-  name         = "gemini-api-key11"
+  name         = "gemini-api-key"
   display_name = "Gemini API Key"
 
   restrictions {
