@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-terraform apply --auto-approve
+terraform apply -parallelism=20 --auto-approve
