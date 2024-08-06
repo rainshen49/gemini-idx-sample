@@ -59,7 +59,7 @@
       };
       # Runs when the workspace is (re)started
       onStart = {
-        bootstrap = "bash bootstrap.sh";
+        terraform = "terraform apply --auto-approve";
       };
     };
   };
