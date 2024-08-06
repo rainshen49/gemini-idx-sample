@@ -32,7 +32,7 @@
       previews = {
         web = {
           command = [
-            ".idx/flutter/bin/flutter"
+            ".flutter/bin/flutter"
             "run"
             "--dart-define-from-file"
             "env.json"
@@ -55,7 +55,7 @@
       # Runs when a workspace is first created
       onCreate = {
         terraform = "terraform init --upgrade";
-        flutter-sdk = ''echo "PATH=$PATH:$PWD/.idx/flutter/bin" >> ~/.bashrc'';
+        flutter-sdk = ''echo "PATH=$PATH:$PWD/.flutter/bin" >> ~/.bashrc'';
       };
       # Runs when the workspace is (re)started
       onStart = {
