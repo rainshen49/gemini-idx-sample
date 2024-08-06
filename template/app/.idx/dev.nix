@@ -1,13 +1,6 @@
 # To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
-{ pkgs, ... }: 
-let
-  flutter_sdk = pkgs.fetchzip {
-    url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.3-stable.tar.xz";
-    sha256 = "sha256-rLglM2KIsgrjddNgdFbJiOCgKQQQFFUuPMP6bpZCEx8=";
-  };
-  in
-{
+{ pkgs, ... }: {
   # Which nixpkgs channel to use.
   channel = "unstable"; # or "unstable"
 
@@ -16,6 +9,7 @@ let
     pkgs.firebase-tools
     pkgs.terraform
     pkgs.dart
+    pkgs.flutter
   ];
 
   # Sets environment variables in the workspace
@@ -39,7 +33,7 @@ let
       previews = {
         web = {
           command = [
-            ".flutter/bin/flutter"
+            "flutter"
             "run"
             "--dart-define-from-file"
             "env.json"
@@ -62,11 +56,6 @@ let
       # Runs when a workspace is first created
       onCreate = {
         terraform = "terraform init --upgrade";
-        flutter-sdk = ''
-          rm -rf .flutter
-          cp -rf ${flutter_sdk}/. .flutter
-          echo "PATH=$PATH:$PWD/.flutter/bin" >> ~/.bashrc
-        '';
       };
       # Runs when the workspace is (re)started
       onStart = {
