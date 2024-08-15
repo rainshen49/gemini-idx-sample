@@ -2,8 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   authState,
-  signInWithPopup,
-  GoogleAuthProvider,
+  signInAnonymously,
   signOut,
   User,
 } from '@angular/fire/auth';
@@ -21,7 +20,6 @@ import {
 import { Router } from '@angular/router';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { environment } from '../../environments/environments';
-import { tap } from 'rxjs/operators';
 
 type Priority = 'high' | 'medium' | 'low';
 
@@ -43,12 +41,11 @@ export class TodoService {
   private firestore = inject(Firestore);
   private auth = inject(Auth);
   private router = inject(Router);
-  private genAI = new GoogleGenerativeAI(environment.gemini_api);
+  private genAI = new GoogleGenerativeAI(environment.gemini_api_key);
   private model = this.genAI.getGenerativeModel({
     model: 'gemini-1.5-flash',
     generationConfig: { responseMimeType: 'application/json' },
   });
-  private provider = new GoogleAuthProvider();
 
   user$ = authState(this.auth);
   private todosSubject = new BehaviorSubject<Todo[]>([]);
@@ -89,11 +86,9 @@ export class TodoService {
   }
 
   login(): void {
-    signInWithPopup(this.auth, this.provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
+    signInAnonymously(this.auth).then((result) => {
         this.router.navigate(['/', 'todo']);
-        return credential;
+        return;
       })
       .catch((error) => console.error('Login error:', error));
   }
