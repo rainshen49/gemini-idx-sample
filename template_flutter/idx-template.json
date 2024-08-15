@@ -1,12 +1,12 @@
 {
-    "name": "Make It So - with AI!",
-    "description": "A sample web app that demonstrates how to experiment with Firebase and Gemini AI",
+    "name": "Firebase + Flutter + Gemini",
+    "description": "Start a simple flutter app using Gemini AI, Flutter, and Firebase",
     "categories": [
         "AI & ML",
-        "Web",
+        "Flutter",
         "Firebase"
     ],
-    "icon": "https://www.gstatic.com/monospace/240513/logo_firebase.svg",
+    "icon": "https://docs.flutter.dev/assets/images/branding/flutter/logo+text/horizontal/default.svg",
     "publisher": "Google LLC",
     "params": [
         {
